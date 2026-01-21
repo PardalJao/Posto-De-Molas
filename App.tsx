@@ -52,43 +52,64 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Initialize state from LocalStorage or Fallback to Initial Data
+  // Added try-catch to prevent white screen if local storage has invalid JSON
   const [leads, setLeads] = useState<Lead[]>(() => {
-    const saved = localStorage.getItem('skouta_leads');
-    return saved ? JSON.parse(saved) : initialLeads;
+    try {
+      const saved = localStorage.getItem('posto_molas_leads');
+      return saved ? JSON.parse(saved) : initialLeads;
+    } catch (e) {
+      console.error("Error parsing leads from localStorage", e);
+      return initialLeads;
+    }
   });
 
   const [tasks, setTasks] = useState<Task[]>(() => {
-    const saved = localStorage.getItem('skouta_tasks');
-    return saved ? JSON.parse(saved) : initialTasks;
+    try {
+      const saved = localStorage.getItem('posto_molas_tasks');
+      return saved ? JSON.parse(saved) : initialTasks;
+    } catch (e) {
+      console.error("Error parsing tasks from localStorage", e);
+      return initialTasks;
+    }
   });
 
   const [history, setHistory] = useState<ExtractionHistory[]>(() => {
-    const saved = localStorage.getItem('skouta_history');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('posto_molas_history');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Error parsing history from localStorage", e);
+      return [];
+    }
   });
 
   const [agents, setAgents] = useState<Agent[]>(() => {
-      const saved = localStorage.getItem('skouta_agents');
+    try {
+      const saved = localStorage.getItem('posto_molas_agents');
       return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Error parsing agents from localStorage", e);
+      return [];
+    }
   });
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   // Persistence Effects
   useEffect(() => {
-    localStorage.setItem('skouta_leads', JSON.stringify(leads));
+    localStorage.setItem('posto_molas_leads', JSON.stringify(leads));
   }, [leads]);
 
   useEffect(() => {
-    localStorage.setItem('skouta_tasks', JSON.stringify(tasks));
+    localStorage.setItem('posto_molas_tasks', JSON.stringify(tasks));
   }, [tasks]);
 
   useEffect(() => {
-    localStorage.setItem('skouta_history', JSON.stringify(history));
+    localStorage.setItem('posto_molas_history', JSON.stringify(history));
   }, [history]);
 
   useEffect(() => {
-      localStorage.setItem('skouta_agents', JSON.stringify(agents));
+      localStorage.setItem('posto_molas_agents', JSON.stringify(agents));
   }, [agents]);
 
   const handleAddLeads = (newLeads: Lead[]) => {

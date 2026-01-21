@@ -8,7 +8,6 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  // Removed "Finance" and "Assistant" to focus on the core funnel
   const navItems = [
     { name: 'Painel de Controle', icon: LayoutDashboard, path: '/' },
     { name: 'Extrair Leads', icon: Search, path: '/extraction' },
@@ -28,10 +27,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       >
         <div className="p-6 flex items-center justify-between bg-black">
           <div className="flex items-center gap-3">
-             <div className="w-10 h-10 bg-yellow-500 rounded-md flex items-center justify-center text-black font-black italic text-xl tracking-tighter transform -skew-x-12 border-2 border-white">RR</div>
+             <div className="w-10 h-10 bg-yellow-500 rounded-md flex items-center justify-center text-black font-black italic text-xl tracking-tighter transform -skew-x-12 border-2 border-white">PM</div>
              <div className="flex flex-col justify-center">
-                <span className="text-sm font-bold tracking-tight text-white leading-none">RR POSTO</span>
-                <span className="text-xs font-semibold text-yellow-500 tracking-wide leading-none uppercase mt-0.5">De Molas</span>
+                <span className="text-sm font-bold tracking-tight text-white leading-none">POSTO DE MOLAS</span>
+                <span className="text-xs font-semibold text-yellow-500 tracking-wide leading-none uppercase mt-0.5">CRM</span>
              </div>
           </div>
           {/* Close button for mobile only */}
@@ -72,11 +71,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="p-4 border-t border-gray-100 bg-gray-50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-yellow-500 text-black border-2 border-black flex items-center justify-center font-bold shadow-sm">
-              JJ
+              AD
             </div>
             <div>
-              <p className="text-sm font-bold text-gray-900">João João</p>
-              <p className="text-xs text-gray-500 font-medium">Gerente de Vendas</p>
+              <p className="text-sm font-bold text-gray-900">Admin</p>
+              <p className="text-xs text-gray-500 font-medium">Posto de Molas</p>
             </div>
           </div>
         </div>

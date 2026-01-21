@@ -51,65 +51,84 @@ const initialTasks: Task[] = [
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Initialize state from LocalStorage or Fallback to Initial Data
-  // Added try-catch to prevent white screen if local storage has invalid JSON
+  // Initialize state with strict safety checks for Window/LocalStorage
   const [leads, setLeads] = useState<Lead[]>(() => {
     try {
-      const saved = localStorage.getItem('posto_molas_leads');
-      return saved ? JSON.parse(saved) : initialLeads;
+      if (typeof window !== 'undefined' && window.localStorage) {
+          const saved = window.localStorage.getItem('posto_molas_leads');
+          return saved ? JSON.parse(saved) : initialLeads;
+      }
+      return initialLeads;
     } catch (e) {
-      console.error("Error parsing leads from localStorage", e);
+      console.error("Error parsing leads", e);
       return initialLeads;
     }
   });
 
   const [tasks, setTasks] = useState<Task[]>(() => {
     try {
-      const saved = localStorage.getItem('posto_molas_tasks');
-      return saved ? JSON.parse(saved) : initialTasks;
+        if (typeof window !== 'undefined' && window.localStorage) {
+          const saved = window.localStorage.getItem('posto_molas_tasks');
+          return saved ? JSON.parse(saved) : initialTasks;
+        }
+        return initialTasks;
     } catch (e) {
-      console.error("Error parsing tasks from localStorage", e);
+      console.error("Error parsing tasks", e);
       return initialTasks;
     }
   });
 
   const [history, setHistory] = useState<ExtractionHistory[]>(() => {
     try {
-      const saved = localStorage.getItem('posto_molas_history');
-      return saved ? JSON.parse(saved) : [];
+        if (typeof window !== 'undefined' && window.localStorage) {
+          const saved = window.localStorage.getItem('posto_molas_history');
+          return saved ? JSON.parse(saved) : [];
+        }
+        return [];
     } catch (e) {
-      console.error("Error parsing history from localStorage", e);
+      console.error("Error parsing history", e);
       return [];
     }
   });
 
   const [agents, setAgents] = useState<Agent[]>(() => {
     try {
-      const saved = localStorage.getItem('posto_molas_agents');
-      return saved ? JSON.parse(saved) : [];
+        if (typeof window !== 'undefined' && window.localStorage) {
+          const saved = window.localStorage.getItem('posto_molas_agents');
+          return saved ? JSON.parse(saved) : [];
+        }
+        return [];
     } catch (e) {
-      console.error("Error parsing agents from localStorage", e);
+      console.error("Error parsing agents", e);
       return [];
     }
   });
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
-  // Persistence Effects
+  // Persistence Effects with Safety Checks
   useEffect(() => {
-    localStorage.setItem('posto_molas_leads', JSON.stringify(leads));
+    if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('posto_molas_leads', JSON.stringify(leads));
+    }
   }, [leads]);
 
   useEffect(() => {
-    localStorage.setItem('posto_molas_tasks', JSON.stringify(tasks));
+    if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('posto_molas_tasks', JSON.stringify(tasks));
+    }
   }, [tasks]);
 
   useEffect(() => {
-    localStorage.setItem('posto_molas_history', JSON.stringify(history));
+    if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('posto_molas_history', JSON.stringify(history));
+    }
   }, [history]);
 
   useEffect(() => {
-      localStorage.setItem('posto_molas_agents', JSON.stringify(agents));
+      if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('posto_molas_agents', JSON.stringify(agents));
+      }
   }, [agents]);
 
   const handleAddLeads = (newLeads: Lead[]) => {
@@ -191,8 +210,8 @@ export default function App() {
           {/* Mobile Header */}
           <div className="md:hidden bg-white border-b border-gray-200 p-4 flex items-center justify-between sticky top-0 z-20">
              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-yellow-500 rounded flex items-center justify-center text-black font-black italic border border-white shadow-sm">RR</div>
-                <span className="font-bold text-gray-900">Posto de Molas</span>
+                <div className="w-8 h-8 bg-yellow-500 rounded flex items-center justify-center text-black font-black italic border border-white shadow-sm">PM</div>
+                <span className="font-bold text-gray-900">Posto de Molas CRM</span>
              </div>
              <button 
                 onClick={() => setIsSidebarOpen(true)}

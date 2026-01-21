@@ -1,0 +1,7 @@
+{
+  "name": "Posto De Molas",
+  "description": "A comprehensive lead generation and CRM platform featuring Google Maps extraction, Kanban board management, task scheduling, and client tracking.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
